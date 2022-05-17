@@ -1,0 +1,27 @@
+-- CreateTable
+CREATE TABLE "TB_USERS" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "TB_USERS_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TB_REFRESH_TOKEN" (
+    "id" TEXT NOT NULL,
+    "expiresIn" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "TB_REFRESH_TOKEN_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TB_USERS_username_key" ON "TB_USERS"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "TB_REFRESH_TOKEN_userId_key" ON "TB_REFRESH_TOKEN"("userId");
+
+-- AddForeignKey
+ALTER TABLE "TB_REFRESH_TOKEN" ADD CONSTRAINT "TB_REFRESH_TOKEN_userId_fkey" FOREIGN KEY ("userId") REFERENCES "TB_USERS"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
